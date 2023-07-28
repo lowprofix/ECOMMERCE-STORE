@@ -7,7 +7,7 @@ export interface Product {
     size: Size;
     color: Color;
     images: Image[];
-    description: string;
+   description: string;
   };
   
   export interface Image {
@@ -38,3 +38,9 @@ export interface Product {
     name: string;
     value: string;
   };
+
+  export interface Store {
+    id: string;
+    name: string;
+    logoUrl: string;
+  }
