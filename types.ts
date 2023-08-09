@@ -45,3 +45,4 @@ export interface Store {
   name: string;
   logoUrl: string;
 }
+

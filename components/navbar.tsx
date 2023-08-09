@@ -7,27 +7,35 @@ import getCategories from "@/actions/get-categories";
 import Image from "next/image";
 import getStore from "@/actions/get-stores";
 
+
 const Navbar = async () => {
   const categories = await getCategories();
   const store = await getStore();
   return (
     <div className="border-b">
       <Container>
-        <div className="relative px-4 sm:px-6 lg:px-8 flex h-16 items-center">
+        <div className="relative px-4 sm:px-6 lg:px-8 flex h-16 justify-between">
+          <div className="flex items-center gap-x-2">
           <Link href="/" className="ml-4 flex lg:ml-0 gap-x-2">
             <div className="flex items-center transition-transform duration-500 ease-in-out hover:scale-110">
               <Image
                 src={store?.logoUrl}
                 alt="logo"
-                width="50"
-                height="50"
-                className=""
+                width={500}
+                height={500}
+                className="w-11 h-11"
               />
               <div className="font-bold text-2xl">{store?.name}</div>
             </div>
           </Link>
           <MainNav data={categories} />
-          <NavbarActions />
+         </div>
+      
+          <div className="flex gap-x-2">
+       
+            <NavbarActions />
+          </div>
+          
         </div>
       </Container>
     </div>
