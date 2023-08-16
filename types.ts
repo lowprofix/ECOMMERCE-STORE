@@ -1,4 +1,8 @@
 export interface Product {
+  sizeId: string;
+  colorId: string;
+  startTime: Date;
+  endTime: Date;
   id: string;
   category: Category;
   name: string;
@@ -8,6 +12,7 @@ export interface Product {
   color: Color;
   images: Image[];
   description: string;
+  availability: Availability[];
 }
 
 export interface Image {
@@ -25,7 +30,7 @@ export interface Category {
   id: string;
   name: string;
   billboard: Billboard;
-  description: string;
+  textDescription: string;
 }
 
 export interface Size {
@@ -44,5 +49,13 @@ export interface Store {
   id: string;
   name: string;
   logoUrl: string;
+}
+
+export interface Availability {
+  id: string;
+  name: "Availability"
+  startTime: Date;
+  endTime: Date;
+  
 }
 

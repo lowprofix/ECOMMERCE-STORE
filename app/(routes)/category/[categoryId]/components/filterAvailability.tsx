@@ -5,15 +5,15 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 import Button from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Color, Size } from "@/types";
+import { Availability } from "@/types";
 
-interface FilterProps {
-  data: (Size | Color )[];
+interface FilterAvailabilityProps {
+  data: Availability[];
   name: string;
   valueKey: string;
 };
 
-const Filter: React.FC<FilterProps> = ({
+const FilterAvailability: React.FC<FilterAvailabilityProps> = ({
   data,
   name,
   valueKey,
@@ -50,22 +50,27 @@ const Filter: React.FC<FilterProps> = ({
       </h3>
       <hr className="my-4" />
       <div className="flex flex-wrap gap-2">
-        {data.map((filter) => (
-          <div key={filter.id} className="flex items-center">
-            <Button
-              className={cn(
-                'rounded-md text-sm text-gray-800 p-2 bg-white border border-gray-300',
-                selectedValue === filter.id && 'bg-black text-white'
-              )}
-              onClick={() => onClick(filter.id)}
-            >
-              {filter.name}
-            </Button>
-          </div>
-        ))}
+        {data.map((filter) => {
+          const startTime = new Date(filter.startTime);
+          const endTime = new Date(filter.endTime);
+      
+          return (
+            <div key={filter.id} className="flex items-center">
+              <Button
+                className={cn(
+                  'rounded-md text-sm text-gray-800 p-2 bg-white border border-gray-300',
+                  selectedValue === filter.id && 'bg-black text-white'
+                )}
+                onClick={() => onClick(filter.id)}
+              >
+                {startTime.toLocaleDateString()} - {endTime.toLocaleDateString()}
+              </Button>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
 };
 
-export default Filter;
+export default FilterAvailability;

@@ -23,9 +23,9 @@ const Navbar = async () => {
                 alt="logo"
                 width={500}
                 height={500}
-                className="w-11 h-11"
+                className="w-8 h-8  sm:w-11 sm:h-11 "
               />
-              <div className="font-bold text-2xl">{store?.name}</div>
+              <div className="font-bold text-2xl hidden sm:block">{store?.name}</div>
             </div>
           </Link>
           <MainNav data={categories} />

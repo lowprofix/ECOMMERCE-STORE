@@ -6,29 +6,32 @@ import { Dialog } from "@headlessui/react";
 
 import IconButton from "@/components/ui/icon-button";
 import Button from "@/components/ui/button";
-import { Color, Size } from "@/types";
+import { Color, Size, Availability } from "@/types";
 
 import Filter from "./filter";
+import FilterAvailability from "./filterAvailability";
 
 interface MobileFiltersProps {
   sizes: Size[];
   colors: Color[];
+  availability: Availability[];
+
 }
 
-const MobileFilters: React.FC<MobileFiltersProps> = ({ sizes, colors }) => {
+const MobileFilters: React.FC<MobileFiltersProps> = ({ sizes, colors, availability }) => {
   const [open, setOpen] = useState(false);
 
   const onOpen = () => setOpen(true);
   const onClose = () => setOpen(false);
 
-  if (!sizes || !colors) {
+  if (!sizes || !colors || !availability ) {
     return null;
   }
   return (
     <>
-      <Button onClick={onOpen} className="flex items-center gap-x-2 lg:hidden">
+      <Button onClick={onOpen} className="flex items-center  gap-x-2 lg:hidden ">
         Filters
-        <Plus size={20} />
+        <Plus size={18} />
       </Button>
 
       <Dialog
@@ -51,6 +54,8 @@ const MobileFilters: React.FC<MobileFiltersProps> = ({ sizes, colors }) => {
             <div className="p-4">
               <Filter valueKey="sizeId" name="Sizes" data={sizes} />
               <Filter valueKey="colorId" name="Colors" data={colors} />
+              <FilterAvailability valueKey="availabilityId" name="Availability" data={availability} />
+              
             </div>
           </Dialog.Panel>
         </div>

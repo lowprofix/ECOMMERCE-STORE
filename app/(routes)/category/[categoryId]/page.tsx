@@ -8,9 +8,13 @@ import getProducts from "@/actions/get-products";
 import getCategory from "@/actions/get-category";
 import getSizes from "@/actions/get-sizes";
 import getColors from "@/actions/get-colors";
+import getAvailabilities from "@/actions/get-availlability";
+
 
 import Filter from "./components/filter";
-import MobileFilters from "./components/mobile-filters";
+import FilterAvailability from "./components/filterAvailability";
+
+
 
 export const revalidate = 0;
 
@@ -21,6 +25,7 @@ interface CategoryPageProps {
   searchParams: {
     colorId: string;
     sizeId: string;
+    availabilityId: string;
   };
 }
 
@@ -36,24 +41,30 @@ const CategoryPage: React.FC<CategoryPageProps> = async ({
   const sizes = await getSizes();
   const colors = await getColors();
   const category = await getCategory(params.categoryId);
+  const availabilities = await getAvailabilities();
 
+
+  
   return (
     <div className="bg-white">
       <Container>
         <Billboard data={category.billboard} />
         <div className="px-4 sm:px-6 lg:px-8 pb-24">
           <div className="lg:grid lg:grid-cols-5 lg:gap-x-8">
-            {products.length > 0 && (
-              <MobileFilters sizes={sizes} colors={colors} />
-            )}
-            {products.length > 0 && (
-              <div className="hidden lg:block">
+            {products.length > 0 && category.name !== "Services" && (
+              <div className="hidden sm:block">
                 <Filter valueKey="sizeId" name="Sizes" data={sizes} />
                 <Filter valueKey="colorId" name="Colors" data={colors} />
               </div>
             )}
+            {products.length > 0 && category.name === "Services" && (
+              <div className="hidden sm:block">
+                <FilterAvailability valueKey="availabilityId" name="Availability" data={availabilities} />
+              </div>
+            )}
+           
             <div className="mt-6 lg:col-span-4 lg:mt-0">
-              {products.length === 0 && category.description === "" && (
+              {products.length === 0 && category.textDescription === "" && (
                 <NoResults />
               )}
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
@@ -63,8 +74,8 @@ const CategoryPage: React.FC<CategoryPageProps> = async ({
               </div>
             </div>
           </div>
-          {category.description && (
-            <TextDescription description={category.description} />
+          {category.textDescription && (
+            <TextDescription description={category.textDescription} />
           )}
         </div>
       </Container>
